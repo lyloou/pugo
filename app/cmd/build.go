@@ -11,8 +11,11 @@ import (
 )
 
 var (
-	buildFlags = commonFlags
-	watchCtx   *compile.Context
+	buildFlags = append(commonFlags, cli.BoolFlag{
+		Name:  "watch",
+		Usage: "watch source to re-compile",
+	})
+	watchCtx *compile.Context
 	// watchingExt sets the suffix that watching to
 	watchingExt = []string{".md", ".toml", ".html", ".css", ".js", ".jpg", ".png", ".gif"}
 	// watchScheduleTime sets watching timer duration
@@ -30,7 +33,12 @@ var Build = cli.Command{
 			printer.EnableLogf = true
 		}
 		if isSiteAvailable() {
-			buildOnce()
+			ctx := buildOnce()
+			if ctx != nil && cliCtx.Bool("watch") {
+				watchCtx = ctx
+				watchLoop()
+				select {}
+			}
 		}
 		return nil
 	},
