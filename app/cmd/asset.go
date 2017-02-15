@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path/filepath"
-
 	"path"
+	"path/filepath"
 
 	"github.com/go-xiaohei/pugo/app/helper/printer"
 	"github.com/go-xiaohei/pugo/app/helper/ziper"
@@ -19,7 +18,7 @@ var assetFlag = commonFlags
 // Asset is 'asset' command
 var Asset = cli.Command{
 	Name:  "asset",
-	Usage: "convert assets to go source code",
+	Usage: "convert assets to go source code [for developer]",
 	Flags: assetFlag,
 	Action: func(cliCtx *cli.Context) error {
 		if cliCtx.Bool("debug") {
@@ -51,7 +50,7 @@ func convertAsset() {
 	buf.WriteString("var Data = make(map[string]string)\n\n")
 	buf.WriteString("func init(){\n")
 
-	r, err := convertAssetDir(buf, "post", "page", "theme", "media")
+	r, err := convertAssetDir(buf, "post", "page", "theme", "lang", "media")
 	if err != nil {
 		printer.Error("write asset error : %v", err)
 		return

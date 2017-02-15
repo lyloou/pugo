@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/go-xiaohei/pugo/app/cmd"
+	"github.com/go-xiaohei/pugo/app/vars"
 	"github.com/urfave/cli"
 )
 
@@ -19,7 +20,7 @@ func main() {
 		cmd.Server,
 		cmd.Asset,
 	}
-	app.Version = "0.11.0"
+	app.Version = vars.Version
 	app.Compiled = time.Now()
 	// app.HideHelp = true
 	app.Run(os.Args)
