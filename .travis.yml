@@ -13,7 +13,7 @@ before_install:
   - chmod a+x ./test.sh
 
 script:
-  - go build -o pugo.exe pugo.go 
+  - go build -v -o pugo.exe
   - ./pugo.exe version
   - ./pugo.exe build
   - ./pugo.exe asset

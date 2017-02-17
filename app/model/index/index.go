@@ -62,8 +62,8 @@ func NewWithReader(r io.Reader) []*Index {
 				currentText = ""
 				currentLinkText = ""
 				currentArchor = ""
+				nodeDeep--
 			}
-			nodeDeep--
 			continue
 		}
 		if token == html.StartTagToken {
@@ -83,8 +83,8 @@ func NewWithReader(r io.Reader) []*Index {
 						}
 					}
 				}
+				nodeDeep++
 			}
-			nodeDeep++
 
 			if currentLevel > 0 && string(name) == "a" {
 				if hasAttr {
