@@ -1,0 +1,24 @@
+language: go
+
+go:
+  - 1.7.5
+  - 1.8
+  - tip
+
+sudo: false
+
+before_install:
+  - go get -t -v ./...
+  - go get golang.org/x/tools/cmd/cover
+  - chmod a+x ./test.sh
+
+script:
+  - go build -o pugo.exe pugo.go 
+  - ./pugo.exe version
+  - ./pugo.exe build
+  - ./pugo.exe asset
+  - ./pugo.exe init
+  - ./test.sh
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
