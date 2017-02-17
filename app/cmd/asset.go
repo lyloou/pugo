@@ -7,6 +7,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"time"
 
 	"github.com/go-xiaohei/pugo/app/helper/printer"
 	"github.com/go-xiaohei/pugo/app/helper/ziper"
@@ -47,6 +48,8 @@ func convertAsset() {
 	)
 
 	buf.WriteString("package asset \n\n")
+	buf.WriteString(`var Date = "` + time.Now().Format("2006-01-02 15:04") + `"`)
+	buf.WriteString("\n\n")
 	buf.WriteString("var Data = make(map[string]string)\n\n")
 	buf.WriteString("func init(){\n")
 

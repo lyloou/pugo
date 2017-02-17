@@ -12,7 +12,7 @@ import (
 // Gzip compresses bytes
 func Gzip(data []byte) ([]byte, error) {
 	buf := bytes.NewBuffer(nil)
-	writer := gzip.NewWriter(buf)
+	writer, _ := gzip.NewWriterLevel(buf, gzip.BestCompression)
 	if _, err := writer.Write(data); err != nil {
 		return nil, err
 	}

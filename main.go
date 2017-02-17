@@ -19,9 +19,11 @@ func main() {
 		cmd.Build,
 		cmd.Server,
 		cmd.Asset,
+		cmd.Version,
 	}
 	app.Version = vars.Version
 	app.Compiled = time.Now()
+	app.HideVersion = true
 	// app.HideHelp = true
 	app.Run(os.Args)
 }

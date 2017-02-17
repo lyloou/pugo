@@ -14,8 +14,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/go-xiaohei/pugo/app/vars"
 	"github.com/go-xiaohei/pugo/app/helper/printer"
+	"github.com/go-xiaohei/pugo/app/vars"
 	"github.com/mcuadros/go-version"
 )
 

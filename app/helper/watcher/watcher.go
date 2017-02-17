@@ -46,6 +46,11 @@ func New() (*Watcher, error) {
 	return w, nil
 }
 
+// SetExt sets watching files' extension before Start.
+func (w *Watcher) SetExt(ext ...string) {
+	w.watchExt = ext
+}
+
 // Start starts watching and doing the fn if notice
 func (w *Watcher) Start(fn func()) error {
 	if fn == nil {
@@ -124,8 +129,6 @@ func (w *Watcher) Add(dirs ...string) error {
 
 // Close closes Watcher
 func (w *Watcher) Close() error {
-	if w.w == nil {
-		return nil
-	}
+	w.done <- struct{}{}
 	return w.w.Close()
 }

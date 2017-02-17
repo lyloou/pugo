@@ -2,7 +2,7 @@ package vars
 
 const (
 	Version     = "1.0.0"
-	VersionDate = "2017-02-22"
+	VersionDate = "2017-02-22 12:10"
 )
 
 const (
