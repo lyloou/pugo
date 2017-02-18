@@ -6,12 +6,12 @@ const (
 )
 
 const (
-	FrontMatterTOML = iota + 1
+	FrontMetaTOML = iota + 1
 )
 
 var (
-	FrontMatterBreak      = []byte("```")
-	FrontMatterTOMLPrefix = []byte("toml")
+	FrontMetaBreak      = []byte("```")
+	FrontMetaTOMLPrefix = []byte("toml")
 )
 
 // MetaFiles lists meta files
@@ -26,7 +26,7 @@ var TimeFormatLayout = []string{
 	"2006-01-02 15:05:05",
 }
 
-// FrontMatterTypes lists front matter types and its prefix
-var FrontMatterTypes = map[int][]byte{
-	FrontMatterTOML: FrontMatterTOMLPrefix,
+// FrontMetaTypes lists front matter types and its prefix
+var FrontMetaTypes = map[int][]byte{
+	FrontMetaTOML: FrontMetaTOMLPrefix,
 }

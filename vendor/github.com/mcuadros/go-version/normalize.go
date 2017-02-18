@@ -30,7 +30,7 @@ func Normalize(version string) string {
 	}
 
 	if strings.HasPrefix(strings.ToLower(version), "dev-") {
-		return "dev-" + version[4:len(version)]
+		return "dev-" + version[4:]
 	}
 
 	index := 0

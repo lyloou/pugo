@@ -43,6 +43,9 @@ func Copy(ctx *Context) error {
 		if info.IsDir() {
 			return nil
 		}
+		if path.Ext(p) == ".DS_Store" {
+			return nil
+		}
 		printer.Logf("copy %s", p)
 		rel, _ := filepath.Rel(ctx.theme.StaticDir(), p)
 		dstFile := path.Join(ctx.DstDir(), rel)

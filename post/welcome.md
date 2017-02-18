@@ -33,9 +33,9 @@ When you read the post, `PuGo` is running successfully.
 
 This post is generated from file `post/welcome.md`. You can learn it and try to write your own article with following guide.
 
-#### Front-Matter
+#### Front-Meta
 
-Post's front-matter, including title, author etc, are created by first code section with block **\`\`\`toml ..... \`\`\`**:
+Post's front-meta, including title, author etc, are created by first code section with block **\`\`\`toml ..... \`\`\`**:
 
 ```toml
 # post title, required

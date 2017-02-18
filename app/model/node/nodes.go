@@ -25,6 +25,8 @@ const (
 	NodeArchive
 	// NodeXML is node type of xml page
 	NodeXML
+	// NodeNil is node type of nil page, a position to hold children
+	NodeNil
 )
 
 type (
@@ -81,17 +83,7 @@ func (n *Node) Print(prefix string) {
 func (n *Node) Add(p, title string, t, sort int) {
 	p = strings.TrimPrefix(filepath.ToSlash(p), "/")
 	pSlice := strings.SplitN(p, "/", 2)
-	if len(pSlice) < 1 {
-		return
-	}
-	if len(pSlice) == 1 && pSlice[0] != "" {
-		currentNode := &Node{
-			Title: title,
-			URL:   pSlice[0],
-			Sort:  sort,
-			Type:  t,
-		}
-		n.Children = append(n.Children, currentNode)
+	if len(pSlice) < 1 || (len(pSlice) == 1 && pSlice[0] == "") {
 		return
 	}
 	// try to find the node in children
@@ -106,17 +98,20 @@ func (n *Node) Add(p, title string, t, sort int) {
 	}
 	if !isFound {
 		currentNode = &Node{
-			Title: title,
+			Title: "",
 			URL:   pSlice[0],
-			Sort:  sort,
-			Type:  t,
+			Sort:  0,
+			Type:  NodeNil,
 		}
 		n.Children = append(n.Children, currentNode)
 	}
-	if pSlice[1] == "" {
+	if len(pSlice) == 1 || (len(pSlice) > 1 && pSlice[1] == "") {
+		currentNode.Title = title
+		currentNode.Type = t
+		currentNode.Sort = sort
 		return
 	}
-	currentNode.Title = ""
+	// currentNode.Title = ""
 	currentNode.Add(pSlice[1], title, t, sort)
 }
 

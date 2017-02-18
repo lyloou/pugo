@@ -26,6 +26,10 @@ var (
 	ErrMetaLangInvalid = errors.New("meta's language is invalid")
 	// ErrReadMetaFail means it can not load correct meta file
 	ErrReadMetaFail = errors.New("read meta fail")
+	// ErrThemeDirInvalid means theme dir is empty
+	ErrThemeDirInvalid = errors.New("theme dir is invalid")
+	// ErrDestDirInvalid means dest dir is invalid
+	ErrDestDirInvalid = errors.New("dest dir is invalid")
 )
 
 // Payload loads meta for basic Context
@@ -39,6 +43,9 @@ func Payload() (*Context, error) {
 	}
 	if _, err = ctx.Meta.RootURL(); err != nil {
 		return nil, err
+	}
+	if ctx.Config.OutputDir == "" {
+		return nil, ErrDestDirInvalid
 	}
 	return ctx, err
 }
@@ -124,6 +131,9 @@ func readMeta(ctx *Context) error {
 }
 
 func readPosts(ctx *Context) error {
+	if ctx.Config.PostDir == "" {
+		return nil
+	}
 	var (
 		posts  []*post.Post
 		drafts int
@@ -164,6 +174,9 @@ func readPosts(ctx *Context) error {
 }
 
 func readPages(ctx *Context) error {
+	if ctx.Config.PageDir == "" {
+		return nil
+	}
 	var (
 		pages  []*page.Page
 		drafts int
@@ -203,6 +216,13 @@ func readPages(ctx *Context) error {
 }
 
 func readLang(ctx *Context) error {
+	if ctx.Meta.Lang == "" {
+		ctx.i18nGroup = i18n.NewGroup()
+		return nil
+	}
+	if ctx.Config.LangDir == "" {
+		return ErrMetaLangInvalid
+	}
 	i18nGroup := i18n.NewGroup()
 	err := filepath.Walk(ctx.Config.LangDir, func(file string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -231,6 +251,9 @@ func readLang(ctx *Context) error {
 }
 
 func readTheme(ctx *Context) error {
+	if ctx.Config.ThemeDir == "" {
+		return ErrThemeDirInvalid
+	}
 	t := theme.New(ctx.Config.ThemeDir)
 	if err := t.Validate(); err != nil {
 		return err

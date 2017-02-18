@@ -24,7 +24,7 @@ func TestAuthor(t *testing.T) {
 	})
 
 	Convey("Group", t, func() {
-		authors := []*Author{&Author{Name: "abc"}, &Author{Name: "xyz"}, &Author{Name: "123"}}
+		authors := []*Author{{Name: "abc"}, {Name: "xyz"}, {Name: "123"}}
 		group := Group(authors)
 
 		So(group.Get("abc"), ShouldNotBeNil)

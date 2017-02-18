@@ -11,7 +11,8 @@ desc = "PuGo is a simple static site generator"
 # root url of site
 root = "http://localhost:9899/"
 # basic language of site
-lang = "en"
+# if empty, no i18n support
+lang = ""
 
 # navigator item
 [[nav]]

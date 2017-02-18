@@ -23,12 +23,12 @@ var (
 )
 
 var (
-	// ErrPageFrontMatterFail means it can't detect front-matter block in post bytes
-	ErrPageFrontMatterFail = errors.New("detect front-matter fail")
-	// ErrPageFrontMatterTypeUnknown means it can't parse front-matter block with known types
-	ErrPageFrontMatterTypeUnknown = errors.New("can't detect front-matter's format")
-	// ErrPageFrontMatterTimeError means wrong time format in front-matter block
-	ErrPageFrontMatterTimeError = errors.New("time format error in front-matter")
+	// ErrPageFrontMetaFail means it can't detect front-matter block in post bytes
+	ErrPageFrontMetaFail = errors.New("detect front-matter fail")
+	// ErrPageFrontMetaTypeUnknown means it can't parse front-matter block with known types
+	ErrPageFrontMetaTypeUnknown = errors.New("can't detect front-matter's format")
+	// ErrPageFrontMetaTimeError means wrong time format in front-matter block
+	ErrPageFrontMetaTimeError = errors.New("time format error in front-matter")
 )
 
 type (
@@ -56,32 +56,32 @@ type (
 		created      time.Time
 		updated      time.Time
 
-		frontMatterBytes []byte
-		frontMatterType  int
+		frontMetaBytes []byte
+		frontMetaType  int
 	}
 )
 
-func (p *Page) detectFrontMatter() error {
-	dataSlice := bytes.SplitN(p.srcBytes, vars.FrontMatterBreak, 3)
+func (p *Page) detectFrontMeta() error {
+	dataSlice := bytes.SplitN(p.srcBytes, vars.FrontMetaBreak, 3)
 	if len(dataSlice) != 3 {
-		return ErrPageFrontMatterFail
+		return ErrPageFrontMetaFail
 	}
 	frontBytes := bytes.TrimSpace(dataSlice[1])
-	for t, prefix := range vars.FrontMatterTypes {
+	for t, prefix := range vars.FrontMetaTypes {
 		if bytes.HasPrefix(frontBytes, prefix) {
 			frontBytes = bytes.TrimPrefix(frontBytes, prefix)
-			p.frontMatterBytes = frontBytes
-			p.frontMatterType = t
+			p.frontMetaBytes = frontBytes
+			p.frontMetaType = t
 			p.contentBytes = bytes.TrimSpace(dataSlice[2])
 			return nil
 		}
 	}
-	return ErrPageFrontMatterTypeUnknown
+	return ErrPageFrontMetaTypeUnknown
 }
 
-func (p *Page) parseFrontMatter() error {
+func (p *Page) parseFrontMeta() error {
 	var err error
-	if err = toml.Unmarshal(p.frontMatterBytes, p); err != nil {
+	if err = toml.Unmarshal(p.frontMetaBytes, p); err != nil {
 		return err
 	}
 	if err = p.formatTime(); err != nil {
@@ -152,10 +152,10 @@ func New(data []byte, slug string) (*Page, error) {
 			slug:     slug,
 		}
 	)
-	if err = p.detectFrontMatter(); err != nil {
+	if err = p.detectFrontMeta(); err != nil {
 		return nil, err
 	}
-	if err = p.parseFrontMatter(); err != nil {
+	if err = p.parseFrontMeta(); err != nil {
 		return nil, err
 	}
 	p.render()
