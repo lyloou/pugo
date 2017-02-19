@@ -114,7 +114,7 @@ func (p *Post) formatTime() error {
 		p.updated = p.created
 	} else {
 		for _, layout := range vars.TimeFormatLayout {
-			p.created, err = time.Parse(layout, p.Updated)
+			p.updated, err = time.Parse(layout, p.Updated)
 			if err == nil {
 				break
 			}

@@ -17,7 +17,7 @@ func isSiteAvailable() bool {
 	printer.Logf("check meta.toml")
 	if !com.IsFile("meta.toml") {
 		printer.Error("Error: meta.toml is not found.")
-		printer.Print("You need create a new site here with 'pugo new-site'")
+		printer.Print("You need create a new site here with 'pugo init'")
 		return false
 	}
 	return true

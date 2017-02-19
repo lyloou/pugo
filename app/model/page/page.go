@@ -85,7 +85,7 @@ func (p *Page) parseFrontMeta() error {
 		return err
 	}
 	if err = p.formatTime(); err != nil {
-		return err
+		return ErrPageFrontMetaTimeError
 	}
 	return nil
 }
@@ -110,7 +110,7 @@ func (p *Page) formatTime() error {
 		p.updated = p.created
 	} else {
 		for _, layout := range vars.TimeFormatLayout {
-			p.created, err = time.Parse(layout, p.Updated)
+			p.updated, err = time.Parse(layout, p.Updated)
 			if err == nil {
 				break
 			}
@@ -144,12 +144,13 @@ func (p *Page) getIndex() {
 }
 
 // New parses bytes to a *Page
-func New(data []byte, slug string) (*Page, error) {
+func New(data []byte, slug string, srcFile string) (*Page, error) {
 	var (
 		err error
 		p   = &Page{
 			srcBytes: data,
 			slug:     slug,
+			srcFile:  srcFile,
 		}
 	)
 	if err = p.detectFrontMeta(); err != nil {
@@ -169,11 +170,10 @@ func NewFromFile(file, slug string) (*Page, error) {
 	if err != nil {
 		return nil, err
 	}
-	p, err := New(data, slug)
+	p, err := New(data, slug, file)
 	if err != nil {
 		return nil, err
 	}
-	p.srcFile = file
 	return p, nil
 }
 
