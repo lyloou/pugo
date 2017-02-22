@@ -269,6 +269,21 @@ func readTheme(ctx *Context) error {
 		}
 		return p
 	})
+	t.Func("FullTrURL", func(in *i18n.I18n, p string) string {
+		if strings.Contains(p, "//") {
+			return p
+		}
+		u, _ := ctx.Meta.RootURL()
+		lang := ""
+		if in != nil {
+			lang = in.Lang
+		}
+		p = path.Join(u.Path, lang, p)
+		if !strings.HasPrefix(p, "/") {
+			return "/" + p
+		}
+		return p
+	})
 	if err := t.Load(); err != nil {
 		return err
 	}

@@ -71,6 +71,9 @@ func New(dir string) *Theme {
 		}
 		return template.HTML(fmt.Sprintf("%v", v))
 	}
+	theme.funcMap["HTMLAttr"] = func(attr, value string) template.HTMLAttr {
+		return template.HTMLAttr(attr + `="` + value + `"`)
+	}
 	theme.funcMap["Include"] = func(values ...interface{}) template.HTML {
 		var buf bytes.Buffer
 		if len(values) < 2 {

@@ -13,10 +13,11 @@ import (
 )
 
 var (
-	serverFlags = append(commonFlags, cli.BoolFlag{
+	/* serverFlags = append(commonFlags, cli.BoolFlag{
 		Name:  "build",
 		Usage: "force to build before server starting",
-	})
+	})*/
+	serverFlags = commonFlags
 )
 
 // Server is `server` Command
@@ -29,17 +30,18 @@ var Server = cli.Command{
 			printer.EnableLogf = true
 		}
 		if isSiteAvailable() {
-			ctx, ok := isSiteBuilt()
-			if !ok || cliCtx.Bool("build") {
-				printer.Trace("build site to server")
-				ctx = buildOnce()
-			} else {
-				printer.Trace("site is ready for server")
-			}
-			if ctx == nil {
-				return nil
-			}
-			watchCtx = ctx
+			/*
+				ctx, ok := isSiteBuilt()
+				if !ok || cliCtx.Bool("build") {
+					printer.Trace("build site to server")
+					ctx = buildOnce()
+				} else {
+					printer.Trace("site is ready for server")
+				}
+				if ctx == nil {
+					return nil
+				}*/
+			watchCtx = buildOnce()
 			go runServer()
 			watchLoop()
 		}

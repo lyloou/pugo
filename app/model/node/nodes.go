@@ -33,10 +33,11 @@ type (
 	// Node is a tree representation for site pages
 	Node struct {
 		Title    string
-		URL      string
+		RawURL   string
 		Children []*Node
 		Sort     int
 		Type     int
+		Parent   *Node
 	}
 	nodes []*Node
 )
@@ -48,11 +49,32 @@ func (ns nodes) Less(i, j int) bool { return ns[i].Sort < ns[j].Sort }
 // NewTree creates new tree with path
 func NewTree(p string) *Node {
 	return &Node{
-		Title: "@root",
-		URL:   p,
-		Sort:  0,
-		Type:  0,
+		Title:  "@root",
+		RawURL: p,
+		Sort:   0,
+		Type:   0,
 	}
+}
+
+// Child returns a child node in this node tree
+func (n *Node) Child(p string) *Node {
+	if len(n.Children) < 1 {
+		return nil
+	}
+	p = strings.TrimPrefix(filepath.ToSlash(p), "/")
+	pSlice := strings.Split(p, "/")
+	if len(p) < 1 {
+		return n
+	}
+	for _, c := range n.Children {
+		if c.RawURL == pSlice[0] {
+			if len(pSlice) == 1 || (len(pSlice) > 1 && pSlice[1] == "") {
+				return c
+			}
+			return c.Child(strings.Join(pSlice[1:], "/"))
+		}
+	}
+	return nil
 }
 
 // Len returns total nodes counter from this node
@@ -67,13 +89,16 @@ func (n *Node) Len() int {
 // SortChildren sorts children nodes
 func (n *Node) SortChildren() {
 	if len(n.Children) > 0 {
+		for _, c := range n.Children {
+			c.SortChildren()
+		}
 		sort.Sort(nodes(n.Children))
 	}
 }
 
 // Print prints the node as tree level
 func (n *Node) Print(prefix string) {
-	fmt.Printf("%s[%s] %s [%d]\n", prefix, n.Title, n.URL, n.Type)
+	fmt.Printf("%s[%s] %s [%d - $%d]\n", prefix, n.Title, n.RawURL, n.Type, n.Sort)
 	for _, c := range n.Children {
 		c.Print(prefix + "---")
 	}
@@ -90,7 +115,7 @@ func (n *Node) Add(p, title string, t, sort int) {
 	var currentNode *Node
 	isFound := false
 	for _, c := range n.Children {
-		if c.URL == pSlice[0] {
+		if c.RawURL == pSlice[0] {
 			currentNode = c
 			isFound = true
 			break
@@ -98,10 +123,11 @@ func (n *Node) Add(p, title string, t, sort int) {
 	}
 	if !isFound {
 		currentNode = &Node{
-			Title: "",
-			URL:   pSlice[0],
-			Sort:  0,
-			Type:  NodeNil,
+			Title:  "",
+			RawURL: pSlice[0],
+			Sort:   0,
+			Type:   NodeNil,
+			Parent: n,
 		}
 		n.Children = append(n.Children, currentNode)
 	}
@@ -125,7 +151,11 @@ func (n *Node) FillPosts(posts []*post.Post) {
 // FillPages fills posts to nodes
 func (n *Node) FillPages(pages []*page.Page) {
 	for _, p := range pages {
-		n.Add(p.URL(), p.Title, NodePage, p.Sort)
+		t := NodePage
+		if p.IsNode {
+			t = NodeNil
+		}
+		n.Add(p.URL(), p.Title, t, p.Sort)
 	}
 }
 
@@ -151,4 +181,52 @@ func (n *Node) FillCommonPages() {
 	n.Add("archive.html", "archive", NodeArchive, 0)
 	n.Add("feed.xml", "feed", NodeXML, 0)
 	n.Add("sitemap.xml", "sitemap", NodeXML, 0)
+}
+
+// Is returns whether this node is the type of typeName identifier
+func (n *Node) Is(typeName string) bool {
+	switch typeName {
+	case "post":
+		return n.Type == NodePost
+	case "page":
+		return n.Type == NodePage
+	case "index":
+		return n.Type == NodeIndex
+	case "archive":
+		return n.Type == NodeArchive
+	case "tag-list":
+		return n.Type == NodeTagPosts
+	case "post-list":
+		return n.Type == NodePage
+	case "xml":
+		return n.Type == NodeXML
+	case "nil":
+		return n.Type == NodeNil
+	}
+	return false
+}
+
+// URL returns full url of this node with parents' url
+func (n *Node) URL() string {
+	if n.Type == 0 {
+		return ""
+	}
+	var current = n
+	s := []string{n.RawURL}
+	for {
+		p := current.Parent
+		if p == nil {
+			break
+		}
+		if p.RawURL != "" && p.RawURL != "/" {
+			s = append([]string{p.RawURL}, s...)
+		}
+		current = p
+	}
+	return strings.Join(s, "/")
+}
+
+// Link returns current link segement of this node
+func (n *Node) Link() string {
+	return n.RawURL
 }

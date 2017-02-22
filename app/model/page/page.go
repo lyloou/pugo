@@ -159,8 +159,13 @@ func New(data []byte, slug string, srcFile string) (*Page, error) {
 	if err = p.parseFrontMeta(); err != nil {
 		return nil, err
 	}
-	p.render()
-	p.getIndex()
+	if p.IsDraft {
+		return p, nil
+	}
+	if !p.IsNode {
+		p.render()
+		p.getIndex()
+	}
 	return p, nil
 }
 
@@ -204,6 +209,9 @@ func (p *Page) UpdateTime() time.Time {
 
 // DstFile returns rendered destination filepath
 func (p *Page) DstFile() string {
+	if p.IsNode || p.IsDraft {
+		return ""
+	}
 	return fmt.Sprintf("%s.html", p.slug)
 }
 
@@ -214,6 +222,12 @@ func (p *Page) SrcFile() string {
 
 // URL returns site link for this post
 func (p *Page) URL() string {
+	if p.IsDraft {
+		return ""
+	}
+	if p.IsNode {
+		return p.slug
+	}
 	return fmt.Sprintf("%s.html", p.slug)
 }
 

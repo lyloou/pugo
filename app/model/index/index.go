@@ -13,7 +13,7 @@ import (
 type Index struct {
 	Level    int
 	Title    string
-	Archor   string
+	Anchor   string
 	Children []*Index
 	Link     string
 	Parent   *Index
@@ -40,7 +40,7 @@ func NewWithReader(r io.Reader) []*Index {
 		currentLevel    int
 		currentText     string
 		currentLinkText string
-		currentArchor   string
+		currentAnchor   string
 		nodeDeep        int
 
 		indexs []*Index
@@ -56,12 +56,12 @@ func NewWithReader(r io.Reader) []*Index {
 					Level:  currentLevel,
 					Title:  currentText,
 					Link:   currentLinkText,
-					Archor: currentArchor,
+					Anchor: currentAnchor,
 				})
 				currentLevel = 0
 				currentText = ""
 				currentLinkText = ""
-				currentArchor = ""
+				currentAnchor = ""
 				nodeDeep--
 			}
 			continue
@@ -76,7 +76,7 @@ func NewWithReader(r io.Reader) []*Index {
 					for {
 						k, v, isMore := z.TagAttr()
 						if bytes.Equal(k, []byte("id")) {
-							currentArchor = string(v)
+							currentAnchor = string(v)
 						}
 						if !isMore {
 							break

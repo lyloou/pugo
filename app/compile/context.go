@@ -73,6 +73,7 @@ func (ctx *Context) ViewData() map[string]interface{} {
 		"Comment":   ctx.Comment,
 		"Analytics": ctx.Analytics,
 		"Base":      strings.TrimSuffix(u.Path, "/"),
+		"Tree":      ctx.tree,
 	}
 }
 

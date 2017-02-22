@@ -154,11 +154,12 @@ func (p *Post) getIndex() {
 }
 
 // New parses bytes to a *Post
-func New(dataBytes []byte) (*Post, error) {
+func New(dataBytes []byte, file string) (*Post, error) {
 	var (
 		err error
 		p   = &Post{
 			srcBytes: dataBytes,
+			srcFile:  file,
 		}
 	)
 	if err = p.detectFrontMeta(); err != nil {
@@ -166,6 +167,9 @@ func New(dataBytes []byte) (*Post, error) {
 	}
 	if err = p.parseFrontMeta(); err != nil {
 		return nil, err
+	}
+	if p.IsDraft {
+		return p, nil
 	}
 	p.getBrief()
 	p.render()
@@ -179,11 +183,10 @@ func NewFromFile(file string) (*Post, error) {
 	if err != nil {
 		return nil, err
 	}
-	p, err := New(data)
+	p, err := New(data, file)
 	if err != nil {
 		return nil, err
 	}
-	p.srcFile = file
 	return p, nil
 }
 
@@ -224,6 +227,9 @@ func (p *Post) UpdateTime() time.Time {
 
 // DstFile returns rendered destination filepath
 func (p *Post) DstFile() string {
+	if p.IsDraft {
+		return ""
+	}
 	return fmt.Sprintf("%s/%s.html", p.created.Format("2006/1/2"), p.Slug)
 }
 
@@ -234,6 +240,9 @@ func (p *Post) SrcFile() string {
 
 // URL returns site link for this post
 func (p *Post) URL() string {
+	if p.IsDraft {
+		return ""
+	}
 	return fmt.Sprintf("%s/%s.html", p.created.Format("2006/1/2"), p.Slug)
 }
 
