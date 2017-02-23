@@ -30,6 +30,6 @@ func TestIndex(t *testing.T) {
 		So(idx[0].Children[6].Children[3].Children, ShouldHaveLength, 0)
 		So(idx[0].Children[6].Children[4].Children, ShouldHaveLength, 0)
 
-		So(idx[0].Children[1].Archor, ShouldEqual, "language")
+		So(idx[0].Children[1].Anchor, ShouldEqual, "language")
 	})
 }
