@@ -101,6 +101,18 @@
 			"revisionTime": "2017-01-10T12:00:22Z"
 		},
 		{
+			"checksumSHA1": "YRtwcbCRhmXDaHJCtV9sIC45Cn4=",
+			"path": "github.com/tidwall/gjson",
+			"revision": "e3f249f4fdf33c278edeb770426a6f83c954ae64",
+			"revisionTime": "2016-12-16T16:22:41Z"
+		},
+		{
+			"checksumSHA1": "qmePMXEDYGwkAfT9QvtMC58JN/E=",
+			"path": "github.com/tidwall/match",
+			"revision": "173748da739a410c5b0b813b956f89ff94730b4c",
+			"revisionTime": "2016-08-30T17:39:30Z"
+		},
+		{
 			"checksumSHA1": "1keN4Q9F8uHk/Gt5YXG0oCEecKM=",
 			"path": "github.com/urfave/cli",
 			"revision": "2526b57c56f30b50466c96c4133b1a4ad0f0191f",

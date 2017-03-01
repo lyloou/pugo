@@ -7,10 +7,14 @@ import (
 	"html/template"
 	"io/ioutil"
 	"os"
+	"path"
+	"path/filepath"
 	"time"
 
 	"github.com/BurntSushi/toml"
+	"github.com/Unknwon/com"
 	"github.com/go-xiaohei/pugo/app/helper/markdown"
+	"github.com/go-xiaohei/pugo/app/helper/printer"
 	"github.com/go-xiaohei/pugo/app/model"
 	"github.com/go-xiaohei/pugo/app/model/author"
 	"github.com/go-xiaohei/pugo/app/model/index"
@@ -45,10 +49,12 @@ type (
 		Hover      string `toml:"hover"`
 		Lang       string `toml:"lang"`
 		Template   string `toml:"template"`
+		JSONFile   string `toml:"json"`
 
 		index  []*index.Index
 		slug   string
 		author *author.Author
+		json   *JSON
 
 		contentBytes []byte
 		srcBytes     []byte
@@ -143,6 +149,22 @@ func (p *Page) getIndex() {
 	}
 }
 
+func (p *Page) getJSON() {
+	if p.JSONFile != "" && p.srcFile != "" {
+		jsonFile := filepath.Join(path.Dir(p.srcFile), p.JSONFile)
+		if !com.IsFile(jsonFile) {
+			printer.Warn("page error : missing json file %v", jsonFile)
+			return
+		}
+		data, err := ioutil.ReadFile(jsonFile)
+		if err != nil {
+			printer.Warn("pager error : read json file %v", err)
+			return
+		}
+		p.json = NewJSON(data)
+	}
+}
+
 // New parses bytes to a *Page
 func New(data []byte, slug string, srcFile string) (*Page, error) {
 	var (
@@ -165,6 +187,7 @@ func New(data []byte, slug string, srcFile string) (*Page, error) {
 	if !p.IsNode {
 		p.render()
 		p.getIndex()
+		p.getJSON()
 	}
 	return p, nil
 }
@@ -236,7 +259,12 @@ func (p *Page) Index() []*index.Index {
 	return p.index
 }
 
-// Author gets the author pf this post
+// Author returns the author pf this post
 func (p *Page) Author() *author.Author {
 	return p.author
+}
+
+// JSON returns JSON data from related json file
+func (p *Page) JSON() *JSON {
+	return p.json
 }
