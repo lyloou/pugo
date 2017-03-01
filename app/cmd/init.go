@@ -17,6 +17,11 @@ var Init = cli.Command{
 	Usage: "create new site, content and theme for your static site",
 	Flags: initFlags,
 	Action: func(ctx *cli.Context) error {
+		if isSiteAvailable() {
+			printer.Error("error: meta.toml is found.")
+			printer.Trace("you had created a site here.")
+			return nil
+		}
 		printer.Trace("read assets %v", len(asset.Data))
 		for file, data := range asset.Data {
 			if err := ziper.UnGzipFileBase64(data, file); err != nil {

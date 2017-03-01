@@ -17,7 +17,11 @@ var (
 		Name:  "build",
 		Usage: "force to build before server starting",
 	})*/
-	serverFlags = commonFlags
+	serverFlags = append(commonFlags, cli.StringFlag{
+		Name:  "addr",
+		Usage: "set http address to start",
+		Value: "0.0.0.0:9899",
+	})
 )
 
 // Server is `server` Command
@@ -42,7 +46,7 @@ var Server = cli.Command{
 					return nil
 				}*/
 			watchCtx = buildOnce()
-			go runServer()
+			go runServer(cliCtx.String("addr"))
 			watchLoop()
 		}
 		return nil
@@ -58,8 +62,7 @@ func isSiteBuilt() (*compile.Context, bool) {
 	return ctx, com.IsDir(ctx.DstDir())
 }
 
-func runServer() {
-	addrString := "0.0.0.0:9899"
+func runServer(addrString string) {
 	printer.Print("--- starting server...")
 	printer.Trace("server : %v", addrString)
 
