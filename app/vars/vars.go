@@ -1,17 +1,24 @@
 package vars
 
 const (
-	Version     = "1.0.0"
-	VersionDate = "2017-02-22 12:10"
+	// Version is version number
+	Version = "1.0.0"
+	// VersionDate = "2017-02-22 12:10"
 )
 
 const (
+	// FrontMetaTOML is type number of front-meta format toml type
 	FrontMetaTOML = iota + 1
 )
 
 var (
-	FrontMetaBreak      = []byte("```")
+	// FrontMetaBreak is break line of content meta
+	FrontMetaBreak = []byte("```")
+	// FrontMetaTOMLPrefix is prefix tag of content meta
 	FrontMetaTOMLPrefix = []byte("toml")
+
+	// I18nListFile is filename of i18n list file
+	I18nListFile = "i18n.toml"
 )
 
 // MetaFiles lists meta files

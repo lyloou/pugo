@@ -12,7 +12,7 @@ desc = "PuGo is a simple static site generator"
 root = "http://localhost:9899/"
 # basic language of site
 # if empty, no i18n support
-lang = ""
+lang = "en"
 
 # navigator item
 [[nav]]

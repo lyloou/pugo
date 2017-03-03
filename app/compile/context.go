@@ -63,6 +63,7 @@ func (ctx *Context) ViewData() map[string]interface{} {
 	return map[string]interface{}{
 		"Meta":      ctx.Meta,
 		"I18n":      ctx.i18nGroup.Get(ctx.Meta.Lang),
+		"I18nList":  ctx.i18nGroup.List,
 		"Nav":       ctx.Navs,
 		"Hover":     "",
 		"Now":       time.Now(),

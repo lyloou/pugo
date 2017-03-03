@@ -224,24 +224,35 @@ func readLang(ctx *Context) error {
 		return ErrMetaLangInvalid
 	}
 	i18nGroup := i18n.NewGroup()
-	err := filepath.Walk(ctx.Config.LangDir, func(file string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
+
+	i18nListFile := filepath.Join(ctx.Config.LangDir, vars.I18nListFile)
+	if !com.IsFile(i18nListFile) {
+		return i18n.ErrI18nGroupListMissing
+	}
+	data, err := ioutil.ReadFile(i18nListFile)
+	if err != nil {
+		return err
+	}
+	printer.Logf("read %s", i18nListFile)
+	if err = toml.Unmarshal(data, i18nGroup); err != nil {
+		return err
+	}
+	if err = i18nGroup.Validate(); err != nil {
+		return err
+	}
+	for _, item := range i18nGroup.List {
+		file := filepath.Join(ctx.Config.LangDir, item.File)
+		if !com.IsFile(file) {
+			printer.Warn("language file %s is missing", item.File)
+			continue
 		}
-		if info.IsDir() {
-			return nil
-		}
-		if path.Ext(info.Name()) != ".toml" {
-			return nil
-		}
-		printer.Logf("read %s", file)
 		in, err := i18n.NewFromFile(file)
 		if err != nil {
 			return err
 		}
 		i18nGroup.Set(in)
-		return nil
-	})
+		printer.Logf("read %s", file)
+	}
 	ctx.i18nGroup = i18nGroup
 	printer.Trace("language files \t: %v", strings.Join(ctx.i18nGroup.Names(), ","))
 	if ctx.i18nGroup.Get(ctx.Meta.Lang) == nil {

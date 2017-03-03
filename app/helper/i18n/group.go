@@ -1,17 +1,35 @@
 package i18n
 
-import "sync"
+import (
+	"errors"
+	"sync"
+)
 
-// Group is a group of i18n objects
-type Group struct {
-	i18nData map[string]*I18n
-	lock     sync.Mutex
-}
+var (
+	// ErrI18nGroupListMissing means no list data in i18n group
+	ErrI18nGroupListMissing = errors.New("i18n group : list is missing")
+)
+
+type (
+	// Group is a group of i18n objects
+	Group struct {
+		i18nData map[string]*I18n
+		lock     sync.Mutex
+		List     []*Item `toml:"lang"`
+	}
+	// Item is a item description of i18n object in group
+	Item struct {
+		Lang string `toml:"lang"`
+		Name string `toml:"name"`
+		File string `toml:"file"`
+	}
+)
 
 // NewGroup creates a i18n group
 func NewGroup() *Group {
 	return &Group{
 		i18nData: make(map[string]*I18n),
+		List:     make([]*Item, 0),
 	}
 }
 
@@ -46,4 +64,12 @@ func (g *Group) Names() []string {
 		s = append(s, key)
 	}
 	return s
+}
+
+// Validate checks the i18n group is corrent data
+func (g *Group) Validate() error {
+	if len(g.List) == 0 {
+		return ErrI18nGroupListMissing
+	}
+	return nil
 }
