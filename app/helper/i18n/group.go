@@ -47,6 +47,25 @@ func (g *Group) Get(lang string) *I18n {
 	return g.i18nData[lang]
 }
 
+// GetItem gets i18n item by language name or i18n object
+func (g *Group) GetItem(v interface{}) *Item {
+	if str, ok := v.(string); ok {
+		for _, item := range g.List {
+			if item.Lang == str {
+				return item
+			}
+		}
+	}
+	if in, ok := v.(*I18n); ok {
+		for _, item := range g.List {
+			if item.Lang == in.Lang {
+				return item
+			}
+		}
+	}
+	return new(Item)
+}
+
 // Len returns the numbers of i18n in this group
 func (g *Group) Len() int {
 	return len(g.i18nData)

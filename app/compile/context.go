@@ -64,6 +64,7 @@ func (ctx *Context) ViewData() map[string]interface{} {
 		"Meta":      ctx.Meta,
 		"I18n":      ctx.i18nGroup.Get(ctx.Meta.Lang),
 		"I18nList":  ctx.i18nGroup.List,
+		"I18nItem":  ctx.i18nGroup.GetItem(ctx.Meta.Lang),
 		"Nav":       ctx.Navs,
 		"Hover":     "",
 		"Now":       time.Now(),
@@ -75,6 +76,7 @@ func (ctx *Context) ViewData() map[string]interface{} {
 		"Analytics": ctx.Analytics,
 		"Base":      strings.TrimSuffix(u.Path, "/"),
 		"Tree":      ctx.tree,
+		"Slug":      "",
 	}
 }
 
@@ -135,6 +137,7 @@ func (ctx *Context) prepareCompileTask() []compileTask {
 			ViewData: map[string]interface{}{
 				"Post":  p,
 				"Title": p.Title + " - " + ctx.Meta.Title,
+				"Slug":  p.URL(),
 			},
 			SrcFile: p.SrcFile(),
 		})
@@ -143,13 +146,20 @@ func (ctx *Context) prepareCompileTask() []compileTask {
 		if p.IsNode {
 			continue
 		}
+		var lang = p.Lang
+		if lang == "" {
+			lang = ctx.Meta.Lang
+		}
 		task := compileTask{
 			TplFile: "page.html",
 			DstFile: path.Join(ctx.DstDir(), p.URL()),
 			ViewData: map[string]interface{}{
-				"Page":  p,
-				"Hover": p.Hover,
-				"Title": p.Title + " - " + ctx.Meta.Title,
+				"Page":     p,
+				"Hover":    p.Hover,
+				"Title":    p.Title + " - " + ctx.Meta.Title,
+				"Slug":     p.URL(),
+				"I18n":     ctx.i18nGroup.Get(lang),
+				"I18nItem": ctx.i18nGroup.GetItem(lang),
 			},
 			SrcFile: p.SrcFile(),
 		}
@@ -166,6 +176,7 @@ func (ctx *Context) prepareCompileTask() []compileTask {
 				"Pager": pp.Pager,
 				"Posts": pp.Posts,
 				"Title": fmt.Sprintf("Page %d - %s", pp.Pager.Current, ctx.Meta.Title),
+				"Slug":  pp.URL(),
 			},
 			SrcFile: fmt.Sprintf("post-list-%d", pp.Pager.Current),
 		}
@@ -178,6 +189,7 @@ func (ctx *Context) prepareCompileTask() []compileTask {
 			"Pager": ctx.indexPosts.Pager,
 			"Posts": ctx.indexPosts.Posts,
 			"Hover": "index",
+			"Slug":  "index.html",
 		},
 		SrcFile: "index",
 	}
@@ -193,6 +205,7 @@ func (ctx *Context) prepareCompileTask() []compileTask {
 				"Tag":   tp.Tag,
 				"Posts": tp.Posts,
 				"Title": fmt.Sprintf("Tag %d - %s", tp.Tag.Name, ctx.Meta.Title),
+				"Slug":  tp.URL(),
 			},
 			SrcFile: fmt.Sprintf("post-tag-%s", tp.Tag.Name),
 		}
@@ -205,6 +218,7 @@ func (ctx *Context) prepareCompileTask() []compileTask {
 			"Archives": ctx.archives.Archives,
 			"Hover":    "archive",
 			"Title":    "Archive - " + ctx.Meta.Title,
+			"Slug":     ctx.archives.URL(),
 		},
 		SrcFile: "post-archive",
 	}
