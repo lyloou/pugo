@@ -20,15 +20,15 @@
                         </header>
                         <section class="brief">{{.BriefHTML}}</section>
                         <aside class="aside clearfix">
-                            <a class="btn btn-primary btn-lg pull-right" href="{{FullURL .URL}}">Read More</a>
+                            <a class="btn btn-primary btn-lg pull-right" href="{{FullURL .URL}}">{{$.I18n.Tr "post.readmore"}}</a>
                         </aside>
                     </div>
                 </div>
             </article>
             {{end}}
             <div class="article-pager text-center">
-                {{if .Pager.Prev}}<a class="btn btn-lg btn-info" href="{{FullURL .Pager.PrevURL}}">Prev</a>{{end}}
-                {{if .Pager.Next}}<a class="btn btn-lg btn-info" href="{{FullURL .Pager.NextURL}}">Next</a>{{end}}
+                {{if .Pager.Prev}}<a class="btn btn-lg btn-info" href="{{FullURL .Pager.PrevURL}}">{{.I18n.Tr "page.prev"}}</a>{{end}}
+                {{if .Pager.Next}}<a class="btn btn-lg btn-info" href="{{FullURL .Pager.NextURL}}">{{.I18n.Tr "page.next"}}</a>{{end}}
             </div>
         </div>
     </div>

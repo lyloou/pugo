@@ -2,15 +2,15 @@ package i18n
 
 import (
 	"fmt"
-	"strings"
-
 	"io/ioutil"
 	"path"
+	"strings"
 
 	"github.com/BurntSushi/toml"
 )
 
 type (
+	// I18n is i18n object to provide international support
 	I18n struct {
 		values map[string]map[string]string
 		Lang   string
@@ -34,6 +34,11 @@ func (i *I18n) Tr(str string) string {
 // Trf converts string with arguments
 func (i *I18n) Trf(str string, values ...interface{}) string {
 	return fmt.Sprintf(i.Tr(str), values...)
+}
+
+// LangLink joins link with current language prefix
+func (i *I18n) LangLink(link string) string {
+	return path.Join(i.Lang, link)
 }
 
 // NewEmpty creates new empty i18n object,
