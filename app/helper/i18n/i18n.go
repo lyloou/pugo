@@ -41,6 +41,11 @@ func (i *I18n) LangLink(link string) string {
 	return path.Join(i.Lang, link)
 }
 
+// TrimLink trim link with language prefix
+func (i *I18n) TrimLink(link string) string {
+	return strings.TrimPrefix(link, i.Lang)
+}
+
 // NewEmpty creates new empty i18n object,
 // it will keep i18 tool working, but no translated value
 func NewEmpty() *I18n {

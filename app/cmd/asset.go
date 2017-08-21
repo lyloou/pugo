@@ -14,7 +14,10 @@ import (
 	"github.com/urfave/cli"
 )
 
-var assetFlag = commonFlags
+var assetFlag = append(commonFlags, cli.BoolFlag{
+	Name:  "build",
+	Usage: "only build asset time file",
+})
 
 // Asset is 'asset' command
 var Asset = cli.Command{
@@ -25,7 +28,10 @@ var Asset = cli.Command{
 		if cliCtx.Bool("debug") {
 			printer.EnableLogf = true
 		}
-		convertAsset()
+		if !cliCtx.Bool("build") {
+			convertAsset()
+		}
+		createBuildtime()
 		return nil
 	},
 }
@@ -40,6 +46,21 @@ func (c *convertResult) ratio() string {
 	return fmt.Sprintf("%.1f", float64(c.encodeSize)/float64(c.fileSize)*100)
 }
 
+func createBuildtime() {
+	file := "app/asset/build.go"
+	now := time.Now().Format("2006-01-02 15:04:05")
+	buf := bytes.NewBuffer(nil)
+	buf.WriteString("package asset \n\n")
+	buf.WriteString(`var Built = "` + now + `"`)
+	buf.WriteString("\n\n")
+	if err := ioutil.WriteFile(file, buf.Bytes(), os.ModePerm); err != nil {
+		printer.Error("write asset error : %v", err)
+		return
+	}
+	printer.Info("write build time %v", now)
+	printer.Info("write assets %v", file)
+}
+
 func convertAsset() {
 	var (
 		buf  = bytes.NewBuffer(nil)
@@ -48,7 +69,7 @@ func convertAsset() {
 	)
 
 	buf.WriteString("package asset \n\n")
-	buf.WriteString(`var Date = "` + time.Now().Format("2006-01-02 15:04") + `"`)
+	buf.WriteString(`var Date = "` + time.Now().Format("2006-01-02 15:04:05") + `"`)
 	buf.WriteString("\n\n")
 	buf.WriteString("var Data = make(map[string]string)\n\n")
 	buf.WriteString("func init(){\n")
