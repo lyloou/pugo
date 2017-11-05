@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/Unknwon/com"
-	"github.com/go-xiaohei/pugo/app/builder"
-	"github.com/go-xiaohei/pugo/app/server"
+	"github.com/lyloou/pugo/app/builder"
+	"github.com/lyloou/pugo/app/server"
 	"github.com/urfave/cli"
 	"gopkg.in/inconshreveable/log15.v2"
 )

@@ -40,7 +40,7 @@ hover = "docs"
 blank = true
 
 [[nav]]
-link = "http://godoc.org/github.com/go-xiaohei/pugo"
+link = "http://godoc.org/github.com/lyloou/pugo"
 title = "API"
 i18n = "api"
 hover = "api"

@@ -5,7 +5,7 @@ import (
 	"path"
 	"testing"
 
-	"github.com/go-xiaohei/pugo/app/helper"
+	"github.com/lyloou/pugo/app/helper"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
@@ -52,7 +52,7 @@ func TestMetaRead(t *testing.T) {
 						meta.NavGroup.SetPrefix("abc")
 						So(meta.NavGroup[0].Link, ShouldEqual, "abc/guide.html")
 						So(meta.NavGroup[0].TrLink(i18n), ShouldEqual, "/en/abc/guide.html")
-						So(meta.NavGroup[3].TrLink(i18n), ShouldEqual, "https://github.com/go-xiaohei/pugo")
+						So(meta.NavGroup[3].TrLink(i18n), ShouldEqual, "https://github.com/lyloou/pugo")
 					})
 
 					Convey("NavError", func() {

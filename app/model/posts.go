@@ -1,6 +1,6 @@
 package model
 
-import "github.com/go-xiaohei/pugo/app/helper"
+import "github.com/lyloou/pugo/app/helper"
 
 // Posts are posts list
 type Posts []*Post

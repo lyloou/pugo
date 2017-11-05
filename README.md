@@ -1,9 +1,9 @@
 # Pugo
 
-[![Travis](https://img.shields.io/travis/go-xiaohei/pugo.svg)](https://travis-ci.org/go-xiaohei/pugo)
-[![Codecov](https://img.shields.io/codecov/c/github/go-xiaohei/pugo.svg)](https://codecov.io/gh/go-xiaohei/pugo)
-[![GoDoc](https://godoc.org/github.com/go-xiaohei/pugo?status.svg)](https://godoc.org/github.com/go-xiaohei/pugo)
-[![Go Report Card](https://goreportcard.com/badge/github.com/go-xiaohei/pugo)](https://goreportcard.com/report/github.com/go-xiaohei/pugo)
+[![Travis](https://img.shields.io/travis/lyloou/pugo.svg)](https://travis-ci.org/lyloou/pugo)
+[![Codecov](https://img.shields.io/codecov/c/github/lyloou/pugo.svg)](https://codecov.io/gh/lyloou/pugo)
+[![GoDoc](https://godoc.org/github.com/lyloou/pugo?status.svg)](https://godoc.org/github.com/lyloou/pugo)
+[![Go Report Card](https://goreportcard.com/badge/github.com/lyloou/pugo)](https://goreportcard.com/report/github.com/lyloou/pugo)
 
 a simple and fast static site generator by [Golang](https://golang.org).
 

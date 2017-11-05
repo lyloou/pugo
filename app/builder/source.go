@@ -9,8 +9,8 @@ import (
 	"strings"
 
 	"github.com/Unknwon/com"
-	"github.com/go-xiaohei/pugo/app/helper"
-	"github.com/go-xiaohei/pugo/app/model"
+	"github.com/lyloou/pugo/app/helper"
+	"github.com/lyloou/pugo/app/model"
 	"gopkg.in/inconshreveable/log15.v2"
 )
 

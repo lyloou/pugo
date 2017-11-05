@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/go-xiaohei/pugo/app/helper"
+	"github.com/lyloou/pugo/app/helper"
 	. "github.com/smartystreets/goconvey/convey"
 	"github.com/urfave/cli"
 	"gopkg.in/inconshreveable/log15.v2"

@@ -9,11 +9,11 @@ import (
 	"time"
 
 	"github.com/Unknwon/com"
-	"github.com/go-xiaohei/pugo/app/helper"
-	"github.com/go-xiaohei/pugo/app/model"
-	"github.com/go-xiaohei/pugo/app/sync"
-	"github.com/go-xiaohei/pugo/app/theme"
-	"github.com/go-xiaohei/pugo/app/vars"
+	"github.com/lyloou/pugo/app/helper"
+	"github.com/lyloou/pugo/app/model"
+	"github.com/lyloou/pugo/app/sync"
+	"github.com/lyloou/pugo/app/theme"
+	"github.com/lyloou/pugo/app/vars"
 	"github.com/urfave/cli"
 	"gopkg.in/inconshreveable/log15.v2"
 )

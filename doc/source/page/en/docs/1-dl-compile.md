@@ -14,7 +14,7 @@ To install `PuGo`, you must have `Go` language. Download **Go** and install it f
 If Go is ready, get `PuGo`'s source code:
 
 ```go
-go get github.com/go-xiaohei/pugo
+go get github.com/lyloou/pugo
 ```
 
 Then you can modify source codes and build your own binary.

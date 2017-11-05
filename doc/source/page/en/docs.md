@@ -6,7 +6,7 @@ lang = "en"
 template = "docs.html"
 ```
 
-Welcome to PuGo Documentation. If you get any question or problem, please raise a new issue in [Github](http://github.com/go-xiaohei/pugo).
+Welcome to PuGo Documentation. If you get any question or problem, please raise a new issue in [Github](http://github.com/lyloou/pugo).
 
 In Documentation, It describes details to
 

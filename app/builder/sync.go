@@ -4,8 +4,8 @@ import (
 	"path"
 	"path/filepath"
 
-	"github.com/go-xiaohei/pugo/app/model"
-	"github.com/go-xiaohei/pugo/app/sync"
+	"github.com/lyloou/pugo/app/model"
+	"github.com/lyloou/pugo/app/sync"
 )
 
 // Sync copy assets to destination directory

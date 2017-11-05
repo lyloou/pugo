@@ -11,7 +11,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/Unknwon/com"
-	"github.com/go-xiaohei/pugo/app/helper"
+	"github.com/lyloou/pugo/app/helper"
 	"gopkg.in/ini.v1"
 )
 

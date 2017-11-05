@@ -1,9 +1,9 @@
 package command
 
 import (
-	"github.com/go-xiaohei/pugo/app/builder"
-	"github.com/go-xiaohei/pugo/app/server"
-	"github.com/go-xiaohei/pugo/app/sync"
+	"github.com/lyloou/pugo/app/builder"
+	"github.com/lyloou/pugo/app/server"
+	"github.com/lyloou/pugo/app/sync"
 	"github.com/urfave/cli"
 )
 

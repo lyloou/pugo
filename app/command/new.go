@@ -12,8 +12,8 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/Unknwon/com"
-	"github.com/go-xiaohei/pugo/app/asset"
-	"github.com/go-xiaohei/pugo/app/model"
+	"github.com/lyloou/pugo/app/asset"
+	"github.com/lyloou/pugo/app/model"
 	"github.com/urfave/cli"
 	"gopkg.in/inconshreveable/log15.v2"
 )

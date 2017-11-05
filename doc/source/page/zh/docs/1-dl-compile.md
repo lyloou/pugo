@@ -14,7 +14,7 @@ template = "docs.html"
 Go 安装好并功能正常后，获取 `PuGo` 的源码：
 
 ```go
-go get github.com/go-xiaohei/pugo
+go get github.com/lyloou/pugo
 ```
 
 然后你可以修改代码，编译自己的版本。

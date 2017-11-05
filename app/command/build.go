@@ -5,7 +5,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/go-xiaohei/pugo/app/builder"
+	"github.com/lyloou/pugo/app/builder"
 	"github.com/urfave/cli"
 	"gopkg.in/inconshreveable/log15.v2"
 )

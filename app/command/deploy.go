@@ -1,7 +1,7 @@
 package command
 
 import (
-	"github.com/go-xiaohei/pugo/app/extend/deploy"
+	"github.com/lyloou/pugo/app/extend/deploy"
 	"github.com/urfave/cli"
 )
 

@@ -6,7 +6,7 @@ lang = "zh"
 template = "docs.html"
 ```
 
-欢迎使用 PuGo，如果你在使用中遇到了问题，可以在 [Github](http://github.com/go-xiaohei/pugo) 提问。
+欢迎使用 PuGo，如果你在使用中遇到了问题，可以在 [Github](http://github.com/lyloou/pugo) 提问。
 
 文档讲比较详细的说明
 

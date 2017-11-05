@@ -6,7 +6,7 @@ import (
 	"path"
 
 	"github.com/Unknwon/com"
-	"github.com/go-xiaohei/pugo/app/theme"
+	"github.com/lyloou/pugo/app/theme"
 	"gopkg.in/inconshreveable/log15.v2"
 )
 

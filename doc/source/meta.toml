@@ -26,7 +26,7 @@ i18n = "showcases"
 hover = "showcases"
 
 [[nav]]
-link = "https://github.com/go-xiaohei/pugo"
+link = "https://github.com/lyloou/pugo"
 title = "Github"
 i18n = "github"
 icon = "fa fa-github"
