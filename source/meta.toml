@@ -1,9 +1,9 @@
 [meta]
 # site title, show in <title>
-title = "PuGo"
+title = "lyloou"
 
 # subtitle, words after title, in description
-subtitle = "Just For Writing"
+subtitle = "Better than the last best"
 
 # print in html <meta>
 keyword = "pugo,golang,static,site,generator"
@@ -12,10 +12,10 @@ keyword = "pugo,golang,static,site,generator"
 desc = "PuGo is a Simple Static Site Generator"
 
 # build links for feed, sitemap
-domain = "localhost"
+domain = "lyloou.com"
 
 # root path for site# if empty, build as http://{domain}/
-root = "http://localhost:9899/"
+root = "http://lyloou.com/"
 
 # cover page for homepage
 cover = "@media/cover.jpg"
@@ -54,9 +54,9 @@ hover = "news"
 blank = true
 
 [[author]]
-name = "pugo"
-email = ""
-url = "http://pugo.io"
+name = "lyloou"
+email = "lyloou6@gmail.com"
+url = "http://lyloou.com"
 avatar = "@media/author.png"
 bio = "the robot of pugo, who generates all default contents."
 
@@ -65,7 +65,7 @@ bio = "the robot of pugo, who generates all default contents."
 # if multi values, it prints all comment iframes
 [comment]
 # disqus site name
-disqus = ""
+disqus = "lyloou"
 # duoshuo short name
 duoshuo = ""
 
